@@ -14,6 +14,7 @@ export default function ResultsContainer({theData}) {
         },
         results: []
     });
+    const [api, setApi] = useState('');
     const [errorMessage, setErrorMessage] = useState(null);
 useEffect(() => {
     setErrorMessage(null);
@@ -28,8 +29,10 @@ useEffect(() => {
             newUsingPostcode, 
             newSliderValue, 
             newCustomDate,
-            submitting
+            submitting,
+            api
         } = theDataRef.current;
+        setApi(api);
         if(!submitting){
             return;
         }
@@ -91,14 +94,16 @@ useEffect(() => {
             {errorMessage && (<div className='error-message'>{errorMessage}</div>)}
             <div className='results-group'>
                 <div className='results-map'>
-                    <ResultsMap
+                    {api && api.length === 39 && 
+                    (<ResultsMap
                     theDetails={dataPacket}
-                    apiKey='AIzaSyCI8K40kWjmHTXnknBPMvG2tjYyPo8Sdk8'
-                    />
+                    apiKey={api}
+                    />)}
                 </div>
+                {api && api.length === 39 && (
                     <ResultsDetails
                     theDetails={dataPacket}
-                    />
+                    />)}
                     
             </div>
         </div>

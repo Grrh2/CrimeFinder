@@ -6,8 +6,7 @@ export default function SearchBar( {submitResults}) {
     const [usingPostcode, setUsingPostcode] = useState(false);
     const [sliderValue, setSliderValue] = useState(1);
     const [customDate, setCustomDate] = useState('2024-01');
-
-  
+    const [apiKey, setApiKey] = useState('');  
     function handleSetUsingPostcode(q) {
         setUsingPostcode(q);
     }
@@ -20,8 +19,20 @@ export default function SearchBar( {submitResults}) {
     function handleSetDate(e) {
         setCustomDate(e.target.value);
     }    
+    function handleApiChange(e) {
+        setApiKey(e.target.value);
+    }
     return (
     <div className='search-bar'>
+        <div className='search-group'>
+            <label htmlFor='api-key'>API Key</label>
+            <input 
+            id='api-key'
+            type='text'
+            onChange={handleApiChange}
+            value={apiKey}
+            />
+        </div>
         <div className='search-group'>
             <label htmlFor='month'>Month</label>
         <input 
@@ -85,7 +96,8 @@ export default function SearchBar( {submitResults}) {
                 newUsingPostcode: usingPostcode,
                 newSliderValue: sliderValue,
                 newCustomDate: customDate,
-                submitting:true
+                submitting:true,
+                api:apiKey
             })
         }}
         className='search-button'
